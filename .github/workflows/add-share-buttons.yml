@@ -1,43 +1,19 @@
 name: Add share buttons
-
-on:
-  push:
-    branches: [main]
-
+on: [push]
 permissions:
   contents: write
-
 jobs:
   patch:
-    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Add share buttons
+      - name: Patch index
         run: |
-          python3 <<'PY'
-          from pathlib import Path
-          p = Path('index.html')
-          s = p.read_text()
-          old = '<a class="permalink" id="successLink" href="#">Permanent brick link</a><button class="cta" style="width:100%" onclick="closeModal(\'successModal\')">BACK TO THE WALL</button>'
-          new = '''<a class="permalink" id="successLink" href="#">Permanent brick link</a><div style="display:flex;gap:8px;margin-top:14px"><button class="bidbtn" style="margin-top:0;flex:1" onclick="copyBrickLink()">COPY LINK</button><button class="bidbtn" style="margin-top:0;flex:1" onclick="shareBrick()">SHARE</button></div><button class="cta" style="width:100%" onclick="closeModal('successModal')">BACK TO THE WALL</button>'''
-          if old not in s:
-              raise SystemExit('success modal pattern not found')
-          s = s.replace(old, new, 1)
-          marker = 'async function handleReturn(){'
-          insert = '''async function copyBrickLink(){const link=document.getElementById('successLink').href;if(!link||link==='#')return;try{await navigator.clipboard.writeText(link);const buttons=document.querySelectorAll('#successModal .bidbtn');const b=buttons[0];const old=b.textContent;b.textContent='COPIED ✓';setTimeout(()=>b.textContent=old,1800)}catch(e){prompt('Copy your permanent brick link:',link)}}
-async function shareBrick(){const link=document.getElementById('successLink').href;const id=document.getElementById('successId').textContent;const name=document.getElementById('successName').textContent;const data={title:'I\'m on THE WALL',text:`${name} is now part of internet history — ${id}`,url:link};try{if(navigator.share)await navigator.share(data);else{await navigator.clipboard.writeText(`${data.text} ${link}`);alert('Share text copied to your clipboard.')}}catch(e){}}
-'''
-          if marker not in s:
-              raise SystemExit('script marker not found')
-          s = s.replace(marker, insert + marker, 1)
-          p.write_text(s)
-          PY
-      - name: Commit changes
+          echo ZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCnA9UGF0aCgnaW5kZXguaHRtbCcpCnM9cC5yZWFkX3RleHQoKQpvbGQ9JycnPGEgY2xhc3M9InBlcm1hbGluayIgaWQ9InN1Y2Nlc3NMaW5rIiBocmVmPSIjIj5QZXJtYW5lbnQgYnJpY2sgbGluazwvYT48YnV0dG9uIGNsYXNzPSJjdGEiIHN0eWxlPSJ3aWR0aDoxMDAlIiBvbmNsaWNrPSJjbG9zZU1vZGFsKCdzdWNjZXNzTW9kYWwnKSI+QkFDSyBUTyBUSEUgV0FMTDwvYnV0dG9uPicnJwpuZXc9JycnPGEgY2xhc3M9InBlcm1hbGluayIgaWQ9InN1Y2Nlc3NMaW5rIiBocmVmPSIjIj5QZXJtYW5lbnQgYnJpY2sgbGluazwvYT48ZGl2IHN0eWxlPSJkaXNwbGF5OmZsZXg7Z2FwOjhweDttYXJnaW4tdG9wOjE0cHgiPjxidXR0b24gY2xhc3M9ImJpZGJ0biIgc3R5bGU9Im1hcmdpbi10b3A6MDtmbGV4OjEiIG9uY2xpY2s9ImNvcHlCcmlja0xpbmsoKSI+Q09QWSBMSU5LPC9idXR0b24+PGJ1dHRvbiBjbGFzcz0iYmlkYnRuIiBzdHlsZT0ibWFyZ2luLXRvcDowO2ZsZXg6MSIgb25jbGljaz0ic2hhcmVCcmljaygpIj5TSEFSRTwvYnV0dG9uPjwvZGl2PjxidXR0b24gY2xhc3M9ImN0YSIgc3R5bGU9IndpZHRoOjEwMCUiIG9uY2xpY2s9ImNsb3NlTW9kYWwoJ3N1Y2Nlc3NNb2RhbCcpIj5CQUNLIFRPIFRIRSBXQUxMPC9idXR0b24+JycnCmFzc2VydCBvbGQgaW4gcwpzPXMucmVwbGFjZShvbGQsbmV3LDEpCm1hcmtlcj0nYXN5bmMgZnVuY3Rpb24gaGFuZGxlUmV0dXJuKCl7JwppbnNlcnQ9JycnYXN5bmMgZnVuY3Rpb24gY29weUJyaWNrTGluaygpe2NvbnN0IGxpbms9ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3N1Y2Nlc3NMaW5rJykuaHJlZjtpZighbGlua3x8bGluaz09PScjJylyZXR1cm47dHJ5e2F3YWl0IG5hdmlnYXRvci5jbGlwYm9hcmQud3JpdGVUZXh0KGxpbmspO2NvbnN0IGI9ZG9jdW1lbnQucXVlcnlTZWxlY3RvcignI3N1Y2Nlc3NNb2RhbCAuYmlkYnRuJyk7Y29uc3Qgb2xkPWIudGV4dENvbnRlbnQ7Yi50ZXh0Q29udGVudD0nQ09QSUVEIOKckyc7c2V0VGltZW91dCgoKT0+Yi50ZXh0Q29udGVudD1vbGQsMTgwMCl9Y2F0Y2goZSl7cHJvbXB0KCdDb3B5IHlvdXIgcGVybWFuZW50IGJyaWNrIGxpbms6JyxsaW5rKX19CmFzeW5jIGZ1bmN0aW9uIHNoYXJlQnJpY2soKXtjb25zdCBsaW5rPWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdzdWNjZXNzTGluaycpLmhyZWY7Y29uc3QgaWQ9ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3N1Y2Nlc3NJZCcpLnRleHRDb250ZW50O2NvbnN0IG5hbWU9ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3N1Y2Nlc3NOYW1lJykudGV4dENvbnRlbnQ7Y29uc3QgZGF0YT17dGl0bGU6IkknbSBvbiBUSEUgV0FMTCIsdGV4dDpgJHtuYW1lfSBpcyBub3cgcGFydCBvZiBpbnRlcm5ldCBoaXN0b3J5IOKAlCAke2lkfWAsdXJsOmxpbmt9O3RyeXtpZihuYXZpZ2F0b3Iuc2hhcmUpYXdhaXQgbmF2aWdhdG9yLnNoYXJlKGRhdGEpO2Vsc2V7YXdhaXQgbmF2aWdhdG9yLmNsaXBib2FyZC53cml0ZVRleHQoYCR7ZGF0YS50ZXh0fSAke2xpbmt9YCk7YWxlcnQoJ1NoYXJlIHRleHQgY29waWVkIHRvIHlvdXIgY2xpcGJvYXJkLicpfX1jYXRjaChlKXt9fQonJycKYXNzZXJ0IG1hcmtlciBpbiBzCnM9cy5yZXBsYWNlKG1hcmtlcixpbnNlcnQrbWFya2VyLDEpCnAud3JpdGVfdGV4dChzKQo= | base64 -d > /tmp/patch.py
+          python3 /tmp/patch.py
+      - name: Commit
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add index.html
-          git diff --cached --quiet && exit 0
-          git commit -m "Add share buttons for claimed bricks"
-          git push
+          git diff --cached --quiet || (git commit -m 'Add share buttons for claimed bricks' && git push)
