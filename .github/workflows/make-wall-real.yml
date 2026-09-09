@@ -6,7 +6,7 @@ on:
 
 jobs:
   fix:
-    if: github.event.head_commit.message != 'Make THE WALL real'
+    if: ${{ github.event.head_commit.message != 'Make THE WALL real' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -23,7 +23,8 @@ jobs:
           s = s.replace('id="claimed">73,421', 'id="claimed">0')
           s = s.replace('width:7.3421%', 'width:0%')
 
-          s = re.sub(r'const recentData=\[\[.*?\]\];\nconst recent=.*?wall\.appendChild\(c\)\}', '''const recentData=[];
+          pattern = r'const recentData=\[\[.*?\]\];\nconst recent=.*?wall\.appendChild\(c\)\}'
+          replacement = '''const recentData=[];
 const recent=document.getElementById("recent");
 const wall=document.getElementById("wall");
 const cells=2000;
@@ -60,10 +61,15 @@ async function loadRealWall(){
   }
 }
 
-function escapeHtml(v){return String(v).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','\"':'&quot;'}[c]))}
-loadRealWall();''', s, count=1, flags=re.S)
+function escapeHtml(v){return String(v).replace(/[&<>\'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','\"':'&quot;'}[c]))}
+loadRealWall();'''
+          s2, n = re.subn(pattern, replacement, s, count=1, flags=re.S)
+          if n != 1:
+              raise SystemExit('Wall demo block not found')
+          s = s2
 
-          s = re.sub(r'const brickSearch=.*?function searchBricks\(\).*?\nfunction shareBrick', '''async function searchBricks(){
+          search_pattern = r'const brickSearch=.*?function searchBricks\(\).*?\nfunction shareBrick'
+          search_replacement = '''async function searchBricks(){
   const q=document.getElementById("search").value.trim();
   const out=document.getElementById("searchResult");
   if(!q){out.innerHTML="";return}
@@ -72,10 +78,13 @@ loadRealWall();''', s, count=1, flags=re.S)
     out.innerHTML=results.length?results.map(x=>`<div class="history-row" style="display:block"><strong>#${x.id} · ${escapeHtml(x.name)}</strong><br><span>"${escapeHtml(x.message||"")}" · Claimed ${escapeHtml(x.claimed_at||"")}</span><br><button class="bidbtn" style="width:auto;padding:8px 12px;margin-top:9px" onclick="shareBrick('${x.id}')">SHARE BRICK →</button></div>`).join(""):'<div style="color:var(--muted);font-size:13px">No brick found.</div>';
   }catch(e){out.innerHTML='<div style="color:var(--muted);font-size:13px">Search is temporarily unavailable.</div>'}
 }
-function shareBrick(no)''', s, count=1, flags=re.S)
+function shareBrick'''
+          s2, n = re.subn(search_pattern, search_replacement, s, count=1, flags=re.S)
+          if n != 1:
+              raise SystemExit('Search demo block not found')
+          s = s2
 
           s = re.sub(r'<section class="panel history">.*?</section>', '<section class="panel history"><div class="panel-title">Limelight history</div><div class="history-row"><span>History</span><strong>No auction winners yet.</strong></div></section>', s, count=1, flags=re.S)
-
           s = s.replace('<div class="featured-name" id="featuredName">Alex Morgan</div>', '<div class="featured-name" id="featuredName">No Limelight yet</div>')
           s = s.replace('<div class="message" id="featuredMsg">"I was here before everyone else."</div>', '<div class="message" id="featuredMsg">The first Limelight will appear after the first auction.</div>')
           s = s.replace('★ WINNER OF YESTERDAY\'S AUCTION', 'NO WINNER YET')
