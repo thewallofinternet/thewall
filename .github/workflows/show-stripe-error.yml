@@ -1,0 +1,32 @@
+name: Show Stripe error
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch checkout error
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text()
+          old = 'data.details||data.message||data.error||`HTTP ${r.status}`'
+          new = 'data.details||data.message||(data.stripe_error&&data.stripe_error.message)||data.error||`HTTP ${r.status}`'
+          if old not in s:
+              raise SystemExit('Target not found')
+          p.write_text(s.replace(old, new, 1))
+          PY
+      - name: Commit fix
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "Show Stripe checkout error details" || exit 0
+          git push
