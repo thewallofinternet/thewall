@@ -19,7 +19,7 @@
 .recent{display:flex;flex-direction:column;gap:10px}.brick{display:flex;gap:13px;align-items:center;border-bottom:1px solid #20242d;padding:3px 0 11px}.brick:last-child{border:0}.mini{width:36px;height:36px;border-radius:7px;background:#d6dce5;flex:0 0 auto}.brickno{font-size:10px;color:#717887}.brickname{font-weight:850;font-size:14px}.brickmsg{font-size:12px;color:#858c99;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px}.empty{color:var(--muted);font-size:13px;padding:8px 0}
 .history{margin-top:15px}.history-row{display:flex;justify-content:space-between;border-bottom:1px solid #20242d;padding:11px 0;font-size:13px}.history-row span{color:var(--muted)}.amount{color:var(--gold)!important}
 .section{text-align:center;padding:78px 10px 10px}.section h2{font-size:39px;letter-spacing:-.06em;margin:0 0 10px}.section p{max-width:620px;margin:auto;color:var(--muted);line-height:1.6}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:28px;text-align:left}.card{padding:23px;border:1px solid var(--line);border-radius:15px;background:var(--panel)}.card b{display:block;margin-bottom:7px}.card span{font-size:14px;color:var(--muted);line-height:1.5}
-footer{border-top:1px solid var(--line);margin-top:70px;padding-top:22px;color:#5f6570;text-align:center;font-size:11px}.modal{position:fixed;inset:0;background:#000c;display:none;align-items:center;justify-content:center;padding:18px;z-index:30}.modal.show{display:flex}.box{width:min(440px,100%);background:#11141b;border:1px solid #343945;border-radius:18px;padding:25px;position:relative;box-shadow:0 30px 100px #000}.close{position:absolute;right:15px;top:12px;background:none;border:0;color:#9ca2ad;font-size:25px;cursor:pointer}.box h3{font-size:27px;letter-spacing:-.05em;margin:0 0 6px}.box p{color:var(--muted);font-size:14px;line-height:1.5}.field{width:100%;padding:13px;margin:6px 0;background:#090b0f;border:1px solid var(--line);border-radius:9px;color:#fff;font:inherit;outline:none}.field:focus{border-color:#68717f}.note{font-size:10px;color:#666d79;margin-top:12px;line-height:1.4}.search-result{margin-top:15px}
+footer{border-top:1px solid var(--line);margin-top:70px;padding-top:22px;color:#5f6570;text-align:center;font-size:11px}.modal{position:fixed;inset:0;background:#000c;display:none;align-items:center;justify-content:center;padding:18px;z-index:30}.modal.show{display:flex}.box{width:min(440px,100%);background:#11141b;border:1px solid #343945;border-radius:18px;padding:25px;position:relative;box-shadow:0 30px 100px #000}.close{position:absolute;right:15px;top:12px;background:none;border:0;color:#9ca2ad;font-size:25px;cursor:pointer}.box h3{font-size:27px;letter-spacing:-.05em;margin:0 0 6px}.box p{color:var(--muted);font-size:14px;line-height:1.5}.field{width:100%;padding:13px;margin:6px 0;background:#090b0f;border:1px solid var(--line);border-radius:9px;color:#fff;font:inherit;outline:none}.field:focus{border-color:#68717f}.note{font-size:10px;color:#666d79;margin-top:12px;line-height:1.4}.search-result{margin-top:15px}.success-box{text-align:center}.success-box .brick-preview{margin:20px 0;padding:20px;border:1px solid #39402f;border-radius:14px;background:#10150d}.success-box .brick-id{font-size:11px;color:var(--lime);font-weight:900;letter-spacing:.16em}.success-box .brick-name{font-size:34px;font-weight:950;letter-spacing:-.06em;margin:6px 0}.success-box .brick-message{color:#c5c9d1;font-size:15px}.permalink{display:block;margin-top:14px;color:var(--lime);font-size:12px;word-break:break-all}
 @media(max-width:760px){.grid2,.cards{grid-template-columns:1fr}.wall{grid-template-columns:repeat(40,1fr);aspect-ratio:1.25}.wall .cell:nth-child(n+2001){display:none}.hero{padding-top:55px}.featured-name{font-size:31px}}
 </style>
 </head>
@@ -57,6 +57,7 @@ footer{border-top:1px solid var(--line);margin-top:70px;padding-top:22px;color:#
 <footer>THE WALL · One million spaces · A permanent internet experiment · © 2026</footer>
 </div>
 <div class="modal" id="claimModal"><div class="box"><button class="close" onclick="closeModal('claimModal')">×</button><h3>Claim your place</h3><p>Your name and message will become part of the wall.</p><input class="field" id="name" maxlength="28" placeholder="Name or nickname"><input class="field" id="msg" maxlength="60" placeholder="Your message (optional)"><button class="cta" style="width:100%" onclick="startCheckout()">CLAIM FOR $1 →</button><div class="note">Payments are handled securely by Stripe. Your brick is created after successful payment.</div></div></div>
+<div class="modal" id="successModal"><div class="box success-box"><button class="close" onclick="closeModal('successModal')">×</button><div style="font-size:34px">✓</div><h3>Your place is permanent.</h3><p>Your payment was successful and your brick is now part of THE WALL.</p><div class="brick-preview"><div class="brick-id" id="successId">BRICK #—</div><div class="brick-name" id="successName">—</div><div class="brick-message" id="successMessage"></div></div><a class="permalink" id="successLink" href="#">Permanent brick link</a><button class="cta" style="width:100%;margin-top:20px" onclick="closeModal('successModal')">BACK TO THE WALL</button></div></div>
 <script>
 const API="https://the-wall-api.michael-christopher-englund.workers.dev";
 const recent=document.getElementById("recent");
@@ -113,14 +114,51 @@ async function searchBricks(){
     const response=await fetch(API+"/api/search?q="+encodeURIComponent(q));
     const matches=await response.json();
     if(!Array.isArray(matches)||!matches.length){out.innerHTML='<div class="empty">No brick found.</div>';return}
-    out.innerHTML=matches.slice(0,5).map(function(x){return '<div class="history-row" style="display:block"><strong>#'+escapeHtml(x.id)+' · '+escapeHtml(x.name)+'</strong><br><span>"'+escapeHtml(x.message||"")+'"</span></div>'}).join("");
+    out.innerHTML=matches.slice(0,5).map(function(x){return '<div class="history-row" style="display:block"><strong>#'+escapeHtml(x.id)+' · '+escapeHtml(x.name)+'</strong><br><span>"'+escapeHtml(x.message||"")+'"</span><br><a href="?brick='+encodeURIComponent(x.id)+'" style="color:var(--lime);font-size:11px">VIEW PERMANENT BRICK →</a></div>'}).join("");
   }catch(e){out.innerHTML='<div class="empty">Search temporarily unavailable.</div>'}
+}
+
+async function showBrickById(id){
+  if(!id)return;
+  try{
+    const response=await fetch(API+"/api/brick/"+encodeURIComponent(id),{cache:"no-store"});
+    if(!response.ok)return;
+    const data=await response.json();
+    if(data.brick){
+      document.getElementById("successId").textContent="BRICK #"+data.brick.id;
+      document.getElementById("successName").textContent=data.brick.name;
+      document.getElementById("successMessage").textContent=data.brick.message?('“'+data.brick.message+'”'):'';
+      const link=SITE_URL+"?brick="+data.brick.id;
+      document.getElementById("successLink").href=link;
+      document.getElementById("successLink").textContent=link;
+      document.getElementById("successModal").classList.add("show");
+    }
+  }catch(e){}
+}
+
+async function showPurchasedBrick(sessionId){
+  if(!sessionId)return;
+  try{
+    const response=await fetch(API+"/api/brick?session="+encodeURIComponent(sessionId),{cache:"no-store"});
+    if(!response.ok)return;
+    const data=await response.json();
+    if(data.brick){
+      document.getElementById("successId").textContent="BRICK #"+data.brick.id;
+      document.getElementById("successName").textContent=data.brick.name;
+      document.getElementById("successMessage").textContent=data.brick.message?('“'+data.brick.message+'”'):'';
+      document.getElementById("successLink").href=data.permanent_url;
+      document.getElementById("successLink").textContent=data.permanent_url;
+      document.getElementById("successModal").classList.add("show");
+      history.replaceState({},"", "?brick="+data.brick.id);
+      loadLiveData();
+    }
+  }catch(e){}
 }
 
 async function loadLiveData(){
   try{
     const response=await fetch(API+"/api/stats",{cache:"no-store"});
-    if(!response.ok) throw new Error("stats unavailable");
+    if(!response.ok)throw new Error("stats unavailable");
     const data=await response.json();
     const count=Number(data.claimed)||0;
     document.getElementById("claimed").textContent=count.toLocaleString();
@@ -134,12 +172,20 @@ async function loadLiveData(){
   }
   try{
     const response=await fetch(API+"/api/recent",{cache:"no-store"});
-    if(!response.ok) throw new Error("recent unavailable");
+    if(!response.ok)throw new Error("recent unavailable");
     renderRecent(await response.json());
   }catch(e){recent.innerHTML='<div class="empty">Recent bricks temporarily unavailable.</div>'}
 }
 
+const SITE_URL="https://thewallofinternet.github.io/thewall/";
+
 loadLiveData();
+
+const params=new URLSearchParams(window.location.search);
+const sessionId=params.get("session_id");
+const brickId=params.get("brick");
+if(sessionId)showPurchasedBrick(sessionId);
+else if(brickId)showBrickById(brickId);
 </script>
 </body>
 </html>
