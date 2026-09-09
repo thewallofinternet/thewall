@@ -1,0 +1,12 @@
+from pathlib import Path
+p=Path('index.html')
+s=p.read_text()
+s=s.replace('<div class="featured-name" id="featuredName">Alex Morgan</div>','<div class="featured-name" id="featuredName">No Limelight yet</div>')
+s=s.replace('<div class="message" id="featuredMsg">"I was here before everyone else."</div>','<div class="message" id="featuredMsg">The first Limelight will appear after the first auction.</div>')
+s=s.replace("★ WINNER OF YESTERDAY'S AUCTION",'NO WINNER YET')
+s=s.replace('<strong id="bid">$47</strong>','<strong id="bid">$0</strong>')
+s=s.replace('18:42:09','— — : — — : — —')
+s=s.replace('The auction is open. Bids are anonymous until the countdown ends.','The Limelight auction will appear here when it is live.')
+s=s.replace('.cell{background:#171a21;cursor:pointer;transition:.12s}', '.cell{background:#171a21;border:1px solid #252a34;cursor:pointer;transition:.12s}')
+s=s.replace('function demoBid(){let n=document.getElementById("bidName").value.trim()||"Anonymous",a=Number(document.getElementById("bidAmount").value);if(a<=47){alert("Your bid must be higher than $47.");return}document.getElementById("featuredName").textContent=n;document.getElementById("bid").textContent="$"+a;alert(`Demo bid placed: $${a}\\n\\nIn production, this would become a real Limelight bid.`);closeModal("bidModal")}', 'function demoBid(){alert("The Limelight auction is not live yet.")}')
+p.write_text(s)
