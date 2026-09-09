@@ -18,7 +18,7 @@ h1{font-size:clamp(54px,9vw,108px);line-height:.84;letter-spacing:-.085em;margin
 .progress{height:13px;max-width:820px;margin:0 auto;background:#171a21;border:1px solid var(--line);border-radius:99px;overflow:hidden}.bar{height:100%;width:0%;background:var(--lime);box-shadow:0 0 22px #b8ff7240}
 .progress-label{font-size:11px;color:var(--muted);margin-top:9px;letter-spacing:.13em;font-weight:800}
 .cta{border:0;background:var(--lime);color:#071006;font-weight:950;padding:16px 25px;border-radius:11px;font-size:14px;cursor:pointer;margin-top:24px}.cta:hover{filter:brightness(1.06)}
-.wallbox{margin-top:12px;background:#0d0f14;border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 25px 80px #0008}.wall{display:grid;grid-template-columns:repeat(80,1fr);gap:2px;aspect-ratio:2.35;background:#050608;border-radius:11px;overflow:hidden}.cell{background:#171a21;cursor:pointer;transition:.12s}.cell:hover{background:var(--lime);transform:scale(1.7);z-index:2}.cell.claimed{background:#aeb7c6}.cell.claimed:nth-child(3n){background:#747d8c}.cell.claimed:nth-child(7n){background:#e4e8ed}.hint{text-align:center;color:#777e8c;font-size:12px;padding:13px 0 1px}
+.wallbox{margin-top:12px;background:#0d0f14;border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 25px 80px #0008}.wall{display:grid;grid-template-columns:repeat(80,1fr);gap:2px;aspect-ratio:2.35;background:#050608;border-radius:11px;overflow:hidden}.cell{background:#171a21;border:1px solid #252a34;cursor:pointer;transition:.12s}.cell:hover{background:var(--lime);transform:scale(1.7);z-index:2}.cell.claimed{background:#aeb7c6}.cell.claimed:nth-child(3n){background:#747d8c}.cell.claimed:nth-child(7n){background:#e4e8ed}.hint{text-align:center;color:#777e8c;font-size:12px;padding:13px 0 1px}
 .grid2{display:grid;grid-template-columns:1.25fr .75fr;gap:15px;margin-top:20px}
 .panel{background:linear-gradient(145deg,#11141b,#0d0f14);border:1px solid var(--line);border-radius:18px;padding:25px}.panel-title{font-size:11px;letter-spacing:.17em;text-transform:uppercase;color:var(--muted);font-weight:900;margin-bottom:18px}
 .limelight{position:relative;overflow:hidden}.limelight:before{content:"";position:absolute;inset:-80px -80px auto auto;width:220px;height:220px;background:#ffd66b18;border-radius:50%;filter:blur(20px)}.star{color:var(--gold);font-size:27px}.featured-name{font-size:36px;font-weight:950;letter-spacing:-.06em;margin-top:6px}.message{color:#c5c9d1;font-size:15px;margin:7px 0 22px}.bidrow{display:flex;align-items:end;justify-content:space-between}.bid small{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.1em}.bid strong{font-size:28px}.timer{text-align:right;font-size:28px;font-variant-numeric:tabular-nums;font-weight:900}.timer small{display:block;color:var(--muted);font-size:9px;letter-spacing:.1em;text-transform:uppercase}
@@ -48,13 +48,13 @@ footer{border-top:1px solid var(--line);margin-top:70px;padding-top:22px;color:#
 <div class="panel limelight">
 <div class="panel-title"><span class="star">★</span> THE LIMELIGHT</div>
 <div style="font-size:10px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;font-weight:900">TODAY'S LIMELIGHT</div>
-<div class="featured-name" id="featuredName">Alex Morgan</div>
-<div class="message" id="featuredMsg">"I was here before everyone else."</div>
-<div style="font-size:11px;color:var(--gold);font-weight:900;margin-bottom:22px">★ WINNER OF YESTERDAY'S AUCTION</div>
+<div class="featured-name" id="featuredName">No Limelight yet</div>
+<div class="message" id="featuredMsg">The first Limelight will appear after the first auction.</div>
+<div style="font-size:11px;color:var(--gold);font-weight:900;margin-bottom:22px">NO WINNER YET</div>
 <div style="border-top:1px solid var(--line);padding-top:20px">
 <div class="panel-title" style="margin-bottom:9px">TOMORROW'S LIMELIGHT</div>
-<p style="margin:0 0 17px;color:var(--muted);font-size:13px;line-height:1.45">The auction is open. Bids are anonymous until the countdown ends.</p>
-<div class="bidrow"><div class="bid"><small>Current highest bid</small><strong id="bid">$47</strong></div><div class="timer"><small>Reveal in</small><span id="timer">18:42:09</span></div></div>
+<p style="margin:0 0 17px;color:var(--muted);font-size:13px;line-height:1.45">The Limelight auction will appear here when it is live.</p>
+<div class="bidrow"><div class="bid"><small>Current highest bid</small><strong id="bid">$0</strong></div><div class="timer"><small>Reveal in</small><span id="timer">— — : — — : — —</span></div></div>
 <button class="bidbtn" onclick="openBid()">PLACE A BID →</button>
 </div></div>
 <div class="panel"><div class="panel-title">Recently claimed</div><div class="recent" id="recent"></div></div>
