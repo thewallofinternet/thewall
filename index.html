@@ -34,7 +34,6 @@ footer{border-top:1px solid var(--line);margin-top:70px;padding-top:22px;color:#
 <body>
 <div class="wrap">
 <header><div class="logo">THE WALL</div><div class="live"><i class="dot"></i> LIVE</div></header>
-
 <section class="hero">
 <div class="eyebrow">A permanent place on the internet</div>
 <h1>BECOME A PART<br>OF INTERNET HISTORY.</h1>
@@ -44,154 +43,39 @@ footer{border-top:1px solid var(--line);margin-top:70px;padding-top:22px;color:#
 <div class="progress-label">7.34% OF THE WALL CLAIMED</div>
 <button class="cta" onclick="openClaim()">CLAIM YOUR PLACE →</button>
 </section>
-
-<section class="wallbox">
-<div class="wall" id="wall"></div>
-<div class="hint">Every square is a person. Explore the wall.</div>
-</section>
-
+<section class="wallbox"><div class="wall" id="wall"></div><div class="hint">Every square is a person. Explore the wall.</div></section>
 <section class="grid2">
 <div class="panel limelight">
 <div class="panel-title"><span class="star">★</span> THE LIMELIGHT</div>
-
 <div style="font-size:10px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;font-weight:900">TODAY'S LIMELIGHT</div>
 <div class="featured-name" id="featuredName">Alex Morgan</div>
 <div class="message" id="featuredMsg">"I was here before everyone else."</div>
 <div style="font-size:11px;color:var(--gold);font-weight:900;margin-bottom:22px">★ WINNER OF YESTERDAY'S AUCTION</div>
-
 <div style="border-top:1px solid var(--line);padding-top:20px">
 <div class="panel-title" style="margin-bottom:9px">TOMORROW'S LIMELIGHT</div>
-<p style="margin:0 0 17px;color:var(--muted);font-size:13px;line-height:1.45">
-The auction is open. Bids are anonymous until the countdown ends.
-</p>
-<div class="bidrow">
-<div class="bid"><small>Current highest bid</small><strong id="bid">$47</strong></div>
-<div class="timer"><small>Reveal in</small><span id="timer">18:42:09</span></div>
-</div>
+<p style="margin:0 0 17px;color:var(--muted);font-size:13px;line-height:1.45">The auction is open. Bids are anonymous until the countdown ends.</p>
+<div class="bidrow"><div class="bid"><small>Current highest bid</small><strong id="bid">$47</strong></div><div class="timer"><small>Reveal in</small><span id="timer">18:42:09</span></div></div>
 <button class="bidbtn" onclick="openBid()">PLACE A BID →</button>
-</div>
-</div>
-
-<div class="panel">
-<div class="panel-title">Recently claimed</div>
-<div class="recent" id="recent"></div>
-</div>
+</div></div>
+<div class="panel"><div class="panel-title">Recently claimed</div><div class="recent" id="recent"></div></div>
 </section>
-
-<section class="panel history">
-<div class="panel-title">Limelight history</div>
-<div class="history-row"><span>Yesterday</span><strong>Jamie — <span class="amount">$62</span></strong></div>
-<div class="history-row"><span>2 days ago</span><strong>Sarah — <span class="amount">$41</span></strong></div>
-<div class="history-row"><span>3 days ago</span><strong>Mike — <span class="amount">$89</span></strong></div>
-<div class="history-row"><span>4 days ago</span><strong>Anonymous — <span class="amount">$35</span></strong></div>
-</section>
-
-<section class="panel" style="margin-top:15px;text-align:center">
-<div class="panel-title">FIND YOUR PLACE</div>
-<h2 style="font-size:30px;letter-spacing:-.05em;margin:0 0 8px">Where is your brick?</h2>
-<p style="color:var(--muted);font-size:14px;margin:0 auto 16px;max-width:500px">Search your name, brick number, or message to find your permanent place on The Wall.</p>
-<div style="display:flex;gap:8px;max-width:600px;margin:auto">
-<input class="field" id="search" style="margin:0" placeholder="Search name, #brick or message…" oninput="searchBricks()">
-<button class="bidbtn" style="width:auto;white-space:nowrap;margin:0;padding:0 18px" onclick="searchBricks()">FIND</button>
-</div>
-<div id="searchResult" style="text-align:left;margin-top:15px"></div>
-</section>
-
-<section class="section">
-<h2>Leave your mark.</h2>
-<p>The Wall is a living record of the people who decided to be part of it. Claim a space, leave a message, and become part of something the internet can keep forever.</p>
-<div class="cards">
-<div class="card"><b>① Claim your space</b><span>Choose your name and a short message. Your place on the wall is yours.</span></div>
-<div class="card"><b>② Watch the wall grow</b><span>Come back and see how many people have joined since you did.</span></div>
-<div class="card"><b>③ Step into the Limelight</b><span>Bid against others for 24 hours in the spotlight. Highest bidder wins the next day.</span></div>
-</div>
-</section>
-
+<section class="panel history"><div class="panel-title">Limelight history</div><div class="history-row"><span>Yesterday</span><strong>Jamie — <span class="amount">$62</span></strong></div><div class="history-row"><span>2 days ago</span><strong>Sarah — <span class="amount">$41</span></strong></div><div class="history-row"><span>3 days ago</span><strong>Mike — <span class="amount">$89</span></strong></div><div class="history-row"><span>4 days ago</span><strong>Anonymous — <span class="amount">$35</span></strong></div></section>
+<section class="panel" style="margin-top:15px;text-align:center"><div class="panel-title">FIND YOUR PLACE</div><h2 style="font-size:30px;letter-spacing:-.05em;margin:0 0 8px">Where is your brick?</h2><p style="color:var(--muted);font-size:14px;margin:0 auto 16px;max-width:500px">Search your name, brick number, or message to find your permanent place on The Wall.</p><div style="display:flex;gap:8px;max-width:600px;margin:auto"><input class="field" id="search" style="margin:0" placeholder="Search name, #brick or message…" oninput="searchBricks()"><button class="bidbtn" style="width:auto;white-space:nowrap;margin:0;padding:0 18px" onclick="searchBricks()">FIND</button></div><div id="searchResult" style="text-align:left;margin-top:15px"></div></section>
+<section class="section"><h2>Leave your mark.</h2><p>The Wall is a living record of the people who decided to be part of it. Claim a space, leave a message, and become part of something the internet can keep forever.</p><div class="cards"><div class="card"><b>① Claim your space</b><span>Choose your name and a short message. Your place on the wall is yours.</span></div><div class="card"><b>② Watch the wall grow</b><span>Come back and see how many people have joined since you did.</span></div><div class="card"><b>③ Step into the Limelight</b><span>Bid against others for 24 hours in the spotlight. Highest bidder wins the next day.</span></div></div></section>
 <footer>THE WALL · One million spaces · A permanent internet experiment · © 2026</footer>
 </div>
-
-<div class="modal" id="claimModal"><div class="box">
-<button class="close" onclick="closeModal('claimModal')">×</button>
-<h3>Claim your place</h3><p>Your name and message will become part of the wall.</p>
-<input class="field" id="name" maxlength="28" placeholder="Name or nickname">
-<input class="field" id="msg" maxlength="60" placeholder="Your message (optional)">
-<button class="cta" style="width:100%" onclick="demoClaim()">CLAIM FOR $1 →</button>
-<div class="demo">Payments are handled securely by Stripe. Your brick is created after successful payment.</div>
-</div></div>
-
-<div class="modal" id="bidModal"><div class="box">
-<button class="close" onclick="closeModal('bidModal')">×</button>
-<h3>Enter the Limelight</h3><p>The highest bidder when the countdown reaches zero becomes tomorrow’s Limelight. All bidders remain anonymous until the auction ends.</p>
-<input class="field" id="bidName" maxlength="28" placeholder="Name (revealed only if you win)">
-<input class="field" id="bidAmount" type="number" min="48" step="1" placeholder="Bid more than $47">
-<button class="cta" style="width:100%" onclick="demoBid()">PLACE BID →</button>
-<div class="demo">Your existing brick remains yours. This bid is only for the Limelight.</div>
-</div></div>
-
+<div class="modal" id="claimModal"><div class="box"><button class="close" onclick="closeModal('claimModal')">×</button><h3>Claim your place</h3><p>Your name and message will become part of the wall.</p><input class="field" id="name" maxlength="28" placeholder="Name or nickname"><input class="field" id="msg" maxlength="60" placeholder="Your message (optional)"><button class="cta" style="width:100%" onclick="demoClaim()">CLAIM FOR $1 →</button><div class="demo">Payments are handled securely by Stripe. Your brick is created after successful payment.</div></div></div>
+<div class="modal" id="bidModal"><div class="box"><button class="close" onclick="closeModal('bidModal')">×</button><h3>Enter the Limelight</h3><p>The highest bidder when the countdown reaches zero becomes tomorrow’s Limelight. All bidders remain anonymous until the auction ends.</p><input class="field" id="bidName" maxlength="28" placeholder="Name (revealed only if you win)"><input class="field" id="bidAmount" type="number" min="48" step="1" placeholder="Bid more than $47"><button class="cta" style="width:100%" onclick="demoBid()">PLACE BID →</button><div class="demo">Your existing brick remains yours. This bid is only for the Limelight.</div></div></div>
 <script>
-const recentData=[
-["#73,421","Alex Morgan","I was here before everyone else."],
-["#73,420","Sarah","Let's fill this thing."],
-["#73,419","Chris","One tiny square."],
-["#73,418","DOGE","Much history."],
-["#73,417","Mika","Hello, future internet."],
-["#73,416","Anonymous","You found me."],
-["#73,415","Jamie","Had to be here."],
-["#73,414","Leo","Worth the dollar."],
-["#73,413","Nora","See you at a million."],
-["#73,412","Sam","I was here."]
-];
-const recent=document.getElementById("recent");
-recentData.forEach(x=>{recent.innerHTML+=`<div class="brick"><div class="mini"></div><div><div class="brickno">${x[0]}</div><div class="brickname">${x[1]}</div><div class="brickmsg">"${x[2]}"</div></div></div>`});
-
-const wall=document.getElementById("wall"), cells=6400, filled=1100;
-for(let i=1;i<=cells;i++){let c=document.createElement("div");c.className="cell"+(i<=filled?" claimed":"");c.onclick=()=>{if(!c.classList.contains("claimed"))openClaim()};wall.appendChild(c)}
-
-let seconds=18*3600+42*60+9;
-function tick(){seconds--;if(seconds<0)seconds=86399;let h=Math.floor(seconds/3600),m=Math.floor(seconds%3600/60),s=seconds%60;document.getElementById("timer").textContent=[h,m,s].map(v=>String(v).padStart(2,"0")).join(":")}
-setInterval(tick,1000);
-const brickSearch=[
-["#73,421","Alex Morgan","I was here before everyone else.","September 9, 2026"],
-["#73,420","Sarah","Let's fill this thing.","September 9, 2026"],
-["#73,419","Chris","One tiny square.","September 9, 2026"],
-["#73,418","DOGE","Much history.","September 9, 2026"],
-["#73,417","Mika","Hello, future internet.","September 9, 2026"],
-["#73,416","Anonymous","You found me.","September 9, 2026"]
-];
-function searchBricks(){
- const q=document.getElementById("search").value.trim().toLowerCase(), out=document.getElementById("searchResult");
- if(!q){out.innerHTML="";return}
- const matches=brickSearch.filter(x=>(x[0]+" "+x[1]+" "+x[2]).toLowerCase().includes(q)).slice(0,5);
- out.innerHTML=matches.length?matches.map(x=>`<div class="history-row" style="display:block"><strong>${x[0]} · ${x[1]}</strong><br><span>"${x[2]}" · Claimed ${x[3]}</span><br><button class="bidbtn" style="width:auto;padding:8px 12px;margin-top:9px" onclick="shareBrick('${x[0]}')">SHARE BRICK →</button></div>`).join(""):`<div style="color:var(--muted);font-size:13px">No brick found. In the live version, every claimed brick will remain searchable forever.</div>`;
-}
-function shareBrick(no){
- const url=location.href.split("#")[0]+"#brick-"+no.replace("#","");
- if(navigator.share) navigator.share({title:"My place on The Wall",text:"I have a place on The Wall.",url});
- else {navigator.clipboard?.writeText(url);alert("Your permanent brick link has been copied.");}
-}
-
-function openClaim(){document.getElementById("claimModal").classList.add("show");document.getElementById("name").focus()}
-function openBid(){document.getElementById("bidModal").classList.add("show");document.getElementById("bidName").focus()}
-function closeModal(id){document.getElementById(id).classList.remove("show")}
-async function demoClaim(){
-  const n=document.getElementById("name").value.trim()||"Anonymous";
-  const m=document.getElementById("msg").value.trim();
-  const btn=document.querySelector("#claimModal .cta");
-  btn.disabled=true; btn.textContent="OPENING CHECKOUT…";
-  try{
-    const r=await fetch("https://the-wall-api.michael-christopher-englund.workers.dev/api/create-brick-checkout",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({name:n,message:m})
-    });
-    const data=await r.json();
-    if(!r.ok || !data.url) throw new Error(data.error||"Could not create checkout");
-    window.location.href=data.url;
-  }catch(e){
-    alert("Checkout could not be started.\n\n"+e.message);
-    btn.disabled=false; btn.textContent="CLAIM FOR $1 →";
-  }
-}
+const recentData=[["#73,421","Alex Morgan","I was here before everyone else."],["#73,420","Sarah","Let's fill this thing."],["#73,419","Chris","One tiny square."],["#73,418","DOGE","Much history."],["#73,417","Mika","Hello, future internet."],["#73,416","Anonymous","You found me."],["#73,415","Jamie","Had to be here."],["#73,414","Leo","Worth the dollar."],["#73,413","Nora","See you at a million."],["#73,412","Sam","I was here."]];
+const recent=document.getElementById("recent");recentData.forEach(x=>{recent.innerHTML+=`<div class="brick"><div class="mini"></div><div><div class="brickno">${x[0]}</div><div class="brickname">${x[1]}</div><div class="brickmsg">"${x[2]}"</div></div></div>`});
+const wall=document.getElementById("wall"),cells=6400,filled=1100;for(let i=1;i<=cells;i++){let c=document.createElement("div");c.className="cell"+(i<=filled?" claimed":"");c.onclick=()=>{if(!c.classList.contains("claimed"))openClaim()};wall.appendChild(c)}
+let seconds=18*3600+42*60+9;function tick(){seconds--;if(seconds<0)seconds=86399;let h=Math.floor(seconds/3600),m=Math.floor(seconds%3600/60),s=seconds%60;document.getElementById("timer").textContent=[h,m,s].map(v=>String(v).padStart(2,"0")).join(":")}setInterval(tick,1000);
+const brickSearch=[["#73,421","Alex Morgan","I was here before everyone else.","September 9, 2026"],["#73,420","Sarah","Let's fill this thing.","September 9, 2026"],["#73,419","Chris","One tiny square.","September 9, 2026"],["#73,418","DOGE","Much history.","September 9, 2026"],["#73,417","Mika","Hello, future internet.","September 9, 2026"],["#73,416","Anonymous","You found me.","September 9, 2026"]];
+function searchBricks(){const q=document.getElementById("search").value.trim().toLowerCase(),out=document.getElementById("searchResult");if(!q){out.innerHTML="";return}const matches=brickSearch.filter(x=>(x[0]+" "+x[1]+" "+x[2]).toLowerCase().includes(q)).slice(0,5);out.innerHTML=matches.length?matches.map(x=>`<div class="history-row" style="display:block"><strong>${x[0]} · ${x[1]}</strong><br><span>"${x[2]}" · Claimed ${x[3]}</span><br><button class="bidbtn" style="width:auto;padding:8px 12px;margin-top:9px" onclick="shareBrick('${x[0]}')">SHARE BRICK →</button></div>`).join(""):`<div style="color:var(--muted);font-size:13px">No brick found. In the live version, every claimed brick will remain searchable forever.</div>`}
+function shareBrick(no){const url=location.href.split("#")[0]+"#brick-"+no.replace("#","");if(navigator.share)navigator.share({title:"My place on The Wall",text:"I have a place on The Wall.",url});else{navigator.clipboard?.writeText(url);alert("Your permanent brick link has been copied.")}}
+function openClaim(){document.getElementById("claimModal").classList.add("show");document.getElementById("name").focus()}function openBid(){document.getElementById("bidModal").classList.add("show");document.getElementById("bidName").focus()}function closeModal(id){document.getElementById(id).classList.remove("show")}
+async function demoClaim(){const n=document.getElementById("name").value.trim()||"Anonymous";const m=document.getElementById("msg").value.trim();const btn=document.querySelector("#claimModal .cta");btn.disabled=true;btn.textContent="OPENING CHECKOUT…";try{const r=await fetch("https://the-wall-api.michael-christopher-englund.workers.dev/api/create-brick-checkout",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:n,message:m})});const raw=await r.text();let data={};try{data=raw?JSON.parse(raw):{}}catch(_){data={error:raw}}if(!r.ok||!data.url){const detail=data.details||data.message||data.error||`HTTP ${r.status}`;throw new Error(detail)}window.location.href=data.url}catch(e){alert("Checkout could not be started.\n\n"+e.message);btn.disabled=false;btn.textContent="CLAIM FOR $1 →"}}
 function demoBid(){let n=document.getElementById("bidName").value.trim()||"Anonymous",a=Number(document.getElementById("bidAmount").value);if(a<=47){alert("Your bid must be higher than $47.");return}document.getElementById("featuredName").textContent=n;document.getElementById("bid").textContent="$"+a;alert(`Demo bid placed: $${a}\\n\\nIn production, this would become a real Limelight bid.`);closeModal("bidModal")}
 </script>
 </body>
