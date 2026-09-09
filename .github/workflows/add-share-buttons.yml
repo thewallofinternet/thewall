@@ -1,13 +1,15 @@
 name: Add share buttons
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [main]
 
 permissions:
   contents: write
 
 jobs:
   patch:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,19 +19,18 @@ jobs:
           from pathlib import Path
           p = Path('index.html')
           s = p.read_text()
-
           old = '<a class="permalink" id="successLink" href="#">Permanent brick link</a><button class="cta" style="width:100%" onclick="closeModal(\'successModal\')">BACK TO THE WALL</button>'
           new = '''<a class="permalink" id="successLink" href="#">Permanent brick link</a><div style="display:flex;gap:8px;margin-top:14px"><button class="bidbtn" style="margin-top:0;flex:1" onclick="copyBrickLink()">COPY LINK</button><button class="bidbtn" style="margin-top:0;flex:1" onclick="shareBrick()">SHARE</button></div><button class="cta" style="width:100%" onclick="closeModal('successModal')">BACK TO THE WALL</button>'''
           if old not in s:
               raise SystemExit('success modal pattern not found')
           s = s.replace(old, new, 1)
-
           marker = 'async function handleReturn(){'
-          insert = '''async function copyBrickLink(){const link=document.getElementById('successLink').href;if(!link||link==='#')return;try{await navigator.clipboard.writeText(link);const b=document.querySelector('#successModal .bidbtn');const old=b.textContent;b.textContent='COPIED ✓';setTimeout(()=>b.textContent=old,1800)}catch(e){prompt('Copy your permanent brick link:',link)}}\nasync function shareBrick(){const link=document.getElementById('successLink').href;const id=document.getElementById('successId').textContent;const name=document.getElementById('successName').textContent;const data={title:'I\'m on THE WALL',text:`${name} is now part of internet history — ${id}`,url:link};try{if(navigator.share)await navigator.share(data);else{await navigator.clipboard.writeText(`${data.text} ${link}`);alert('Share text copied to your clipboard.')}}catch(e){}}\n'''
+          insert = '''async function copyBrickLink(){const link=document.getElementById('successLink').href;if(!link||link==='#')return;try{await navigator.clipboard.writeText(link);const buttons=document.querySelectorAll('#successModal .bidbtn');const b=buttons[0];const old=b.textContent;b.textContent='COPIED ✓';setTimeout(()=>b.textContent=old,1800)}catch(e){prompt('Copy your permanent brick link:',link)}}
+async function shareBrick(){const link=document.getElementById('successLink').href;const id=document.getElementById('successId').textContent;const name=document.getElementById('successName').textContent;const data={title:'I\'m on THE WALL',text:`${name} is now part of internet history — ${id}`,url:link};try{if(navigator.share)await navigator.share(data);else{await navigator.clipboard.writeText(`${data.text} ${link}`);alert('Share text copied to your clipboard.')}}catch(e){}}
+'''
           if marker not in s:
               raise SystemExit('script marker not found')
           s = s.replace(marker, insert + marker, 1)
-
           p.write_text(s)
           PY
       - name: Commit changes
